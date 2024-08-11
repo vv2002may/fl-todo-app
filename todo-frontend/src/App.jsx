@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import CreateTodo from './components/CreateTodo'
-import GetTodo from './components/GetTodo'
+import "./App.css";
+import NavBar from "./components/NavBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 function App() {
-
-  const [todos, setTodos] = useState([])
-  useEffect(()=>{
-    fetch('http://localhost:3000/todo/')
-    .then(response => response.json())
-    .then(data => setTodos(data.todos))
-  },[todos])
   return (
-    <div className='App'>
-      <CreateTodo />
-      <GetTodo todos={todos} />
-    </div>
-  )
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="*" element={<NotFound/>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

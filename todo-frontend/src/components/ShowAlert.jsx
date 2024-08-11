@@ -1,21 +1,30 @@
+import React, { memo } from "react";
+import { useEffect } from "react";
 
-export default function ShowAlert({message}) {
-  //  const alertBox = document.createElement('div');
-  //  alertBox.className = 'custom-alert';
-  //  alertBox.innerHTML = `
-  //    <p>${message}</p>
-  //    <button onclick="document.body.removeChild(this.parentElement)">OK</button>
-  //  `;
-  //  return alertBox;
-  //  document.body.appendChild(alertBox);
+const ShowAlert = memo(function ({ message, setMessage }) {
+  const divRef = React.useRef();
 
-   return (
-      <div id="alert-message">
-         <p>{message}</p>
-       <button onClick={() => {
-         let alertBox=document.querySelector('.App')
-         alertBox.removeChild(document.querySelector('.alert-message'))
-         }}>OK</button>
+  return (
+    <div>
+      <div ref={divRef} className="custom-alert">
+        <p>{message}</p>
+        <div
+          style={
+            {
+              display: 'none',
+            }
+          }
+        >
+          {setTimeout(() => {
+            if (divRef.current) {
+              divRef.current.remove();
+              setMessage("");
+            }
+          }, 2000)}
+        </div>
       </div>
-   )
- }
+    </div>
+  );
+});
+
+export default ShowAlert;
