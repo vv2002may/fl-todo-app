@@ -17,9 +17,9 @@ export default function GetSingleTodo({ todo, fetchTodos }) {
         />
       </div>
 
-      <div className="SingleTodo-date-delete">
-        {/* <button>{date.toDateString()}</button> */}
-      </div>
+      {/* <div className="SingleTodo-date-delete">
+        <button>{date.toDateString()}</button>
+      </div> */}
     </div>
   );
 }
