@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "../components/ShowAlert";
 
@@ -7,6 +7,13 @@ export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      navigate('/');
+    }
+  }, [])
+  
   function handleSignin() {
     fetch("http://localhost:3000/signin", {
       method: "POST",
@@ -29,8 +36,11 @@ export default function Signin() {
       });
   }
 
+  
+
   return (
     <div className="signin">
+      
       <input
         onChange={(e) => setEmail(e.target.value)}
         type="text"

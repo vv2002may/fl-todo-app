@@ -1,12 +1,9 @@
-const jwtSecret = require('../config/jwt.js')
 const jwt = require('jsonwebtoken')
 
-// console.log(jwtSecret)
 function userMiddleware(req, res, next) {
-
    try {
       let token = req.headers.token;
-      const decodedValue = jwt.verify(token, jwtSecret);
+      const decodedValue = jwt.verify(token, process.env.jwtSecret);
       if (decodedValue.email) {
          req.headers.email = decodedValue.email;
          next();
@@ -23,7 +20,6 @@ function userMiddleware(req, res, next) {
       res.status(401).json({
          success: false,
          message: "You are not authenticated!!!",
-         // err
       })
    }
 }

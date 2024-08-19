@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "./ShowAlert";
+
 export default function NavBar() {
   const user = localStorage.getItem("user");
   const [message, setMessage] = useState("");
@@ -27,9 +28,7 @@ export default function NavBar() {
         {user && (
           <button
             onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("user");
-              localStorage.removeItem("email");
+              localStorage.clear();
               navigate("/signin");
             }}
           >

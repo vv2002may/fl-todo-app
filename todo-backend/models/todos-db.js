@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
 const todoSchema = new mongoose.Schema({
-   title:String,
-   description: String,
-   email: String,
+   task:String,
+   // email: String,
+   todoListId:String,
    completed: Boolean
 },{timestamps:true})
 

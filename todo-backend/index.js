@@ -1,15 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const zod = require('zod')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken') 
 const cors = require('cors')
 const { createTodo, updateTodo } = require('./models/todos-zod')
 const { todo } = require('./models/todos-db')
 const { users } = require('./models/user-db')
+const {todoList} =require('./models/todo-list-db')
 const dotenv = require('dotenv')
 dotenv.config();
-const jwtSecret = require('./config/jwt')
-const { userMiddleware } = require('./middleware/userMiddle')
+const { userMiddleware } = require('./middleware/userMiddleware')
 
 
 mongoose.connect(process.env.mongoURL + 'tasks')
@@ -21,9 +21,25 @@ const app = express()
 app.use(cors())
 app.use(express.json());
 
+app.get('/todoList', userMiddleware, (req, res) => {
+   todoList.find({ email: req.headers.email }).sort({
+      completed: 1,
+      updatedAt: -1,
+      createdAt: -1
+   })
+      .then((todoList) => {
+         res.json({
+            success: true,
+            todoList
+         })
+      })
+})
+
 app.get('/todo', userMiddleware, (req, res) => {
-   todo.find({ email: req.headers.email }).sort({
-      // updatedAt: -1,
+
+   todo.find({ todoListId: req.headers.todolistid }).sort({
+      completed: 1,
+      updatedAt: -1,
       createdAt: -1
    })
       .then((todos) => {
@@ -34,16 +50,45 @@ app.get('/todo', userMiddleware, (req, res) => {
       })
 })
 
+app.post('/todoList', userMiddleware, (req, res) => {
+   const schema = zod.object({
+      todoList: zod.string(),
+      // email:zod.string().email()
+   })
+   let payloadData = schema.safeParse(req.body)
+   if (payloadData.success) {
+      todoList.create({
+         todoList: req.body.todoList,
+         email: req.headers.email,
+         // email:req.body.email,
+      })
+         .then((result) => {
+            console.log(result)
+            res.status(200).json({
+               success: true,
+               message: 'Task List Added Successfully!',
+               data:result
+            })
+         })
+   }
+   else {
+      res.status(411).json({
+         message: 'Wrong inputs!'
+      })
+   }
+})
+
 app.post('/todo', userMiddleware, (req, res) => {
+   console.log(req.body)
    let payloadData = createTodo.safeParse(req.body)
    if (payloadData.success) {
       todo.create({
-         title: req.body.title,
-         description: req.body.description,
-         email: req.headers.email,
+         task: req.body.task,
+         todoListId: req.body.todoListId,
          completed: false
       })
          .then((result) => {
+            console.log(result)
             res.status(200).json({
                message: 'Task Added Successfully!'
             })
@@ -63,7 +108,7 @@ app.put('/todo', userMiddleware, (req, res) => {
          _id: req.body.id
       }, {
          completed: req.body.completed,
-         title: req.body.title
+         task: req.body.task
       })
          .then(() => {
             if (req.body.completed) {
@@ -113,7 +158,7 @@ app.post('/signin', (req, res) => {
                   users.findOne(req.body)
                      .then((data) => {
                         if (data) {
-                           const token = jwt.sign({ email: req.body.email }, jwtSecret);
+                           const token = jwt.sign({ email: req.body.email }, process.env.jwtSecret);
                            res.json({
                               success: true,
                               token: token,
@@ -134,7 +179,6 @@ app.post('/signin', (req, res) => {
                   res.json({
                      success: false,
                      message: 'User does not exits!',
-                     jwtSecret
                   })
                }
             })
@@ -172,7 +216,7 @@ app.post('/signup', (req, res) => {
             else {
                users.create(req.body)
                   .then(data => {
-                     const token = jwt.sign({ email: req.body.email }, jwtSecret);
+                     const token = jwt.sign({ email: req.body.email }, process.env.jwtSecret);
                      res.status(200).json({
                         success: true,
                         token: token,

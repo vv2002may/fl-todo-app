@@ -2,11 +2,11 @@ import React, { memo } from "react";
 import { useEffect } from "react";
 
 const ShowAlert = memo(function ({ message, setMessage }) {
-  const divRef = React.useRef();
+  // const divRef = React.useRef();
 
   return (
-    <div>
-      <div ref={divRef} className="custom-alert">
+    <div className="custom-alert">
+      {/* <div ref={divRef} className="custom-alert"> */}
         <p>{message}</p>
         <div
           style={
@@ -16,13 +16,13 @@ const ShowAlert = memo(function ({ message, setMessage }) {
           }
         >
           {setTimeout(() => {
-            if (divRef.current) {
-              divRef.current.remove();
+            // if (divRef.current) {
+            //   divRef.current.remove();
               setMessage("");
-            }
+            // }
           }, 2000)}
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 });

@@ -2,8 +2,6 @@
   /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
   outline: none;
   font-family: "Josefin Sans", sans-serif;
-  /* transition:ease-out .3s; */
-  
 }
 
 button {
@@ -29,14 +27,18 @@ button {
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 }
 
-
 .navBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(16, 15, 15,.2);
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  background: rgba(16, 15, 15, 0.2);
   border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px green;
+  box-shadow: 1px 1px 3px 0px rgb(110, 109, 109),
+    inset 2px 2px 5px 0px rgb(214, 214, 214);
 }
 nav button {
   /* border: 1px solid black; */
@@ -48,18 +50,29 @@ nav button {
   font-weight: 300;
   padding: 10px;
   border-radius: 10px;
-  transition: ease-out .3s;
+  transition: ease-out 0.3s;
 }
-nav button:hover{
+nav button:hover {
   background-color: rgb(7, 173, 173);
   color: white;
+}
+.Home {
+  margin-top: 10%;
+  display: flex;
+}
+
+.todoList{
+  height: 35%;
+  /* border: solid red; */
+  overflow-y: auto;
 }
 .signin {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 5vmax;
+  margin: 10vmax;
+  /* margin-top: 10px; */
 }
 
 .signin input {
@@ -80,31 +93,35 @@ nav button:hover{
   border-radius: 5px;
 }
 
-.GetTodo {
-  /* border: solid; */
-}
 .CreateTodo {
   margin: 2vmax;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 7%;
 }
-
+.GetTodo {
+  margin-top: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .CreateTodo input {
-  padding: .8vmax;
+  padding: 0.8vmax;
   margin: 10px;
   font-size: 1.5vmax;
   border-radius: 5px;
   border: 1px solid;
 }
-.FaPlus {
+.add-btn {
   border: solid;
   padding: 0.5vmax;
-  font-size: 1.5vmax;
+  font-size: 3vmax;
   color: black;
-  border-radius: 5px;
-  color: green;
-  border: 1px solid;
+  /* border-radius: 5px; */
+  /* color: green; */
+  border: none;
   cursor: pointer;
 }
 
@@ -114,25 +131,27 @@ nav button:hover{
   align-items: center;
 }
 .checkbox {
-  /* border: solid; */
-  border-radius: 10px;
-  padding: 1vmax;
   width: 2vmax;
   height: 2vmax;
+  margin: 10px;
 }
 
 .save-btn {
   border: 0.1px solid;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   border-radius: 5px;
   margin: 5px;
   font-size: 1.5vmax;
-  transition: ease-out .3s;
+  transition: ease-out 0.3s;
+  /* border-radius: 50%; */
 }
 
-.save-btn:hover{
+.save-btn:hover {
   background-color: gainsboro;
   transform: scale(1.1);
+  background-color: rgb(203, 239, 136);
+  color: black;
+  border: none;
 }
 .SingleTodo {
   margin: 2vmax;
@@ -148,9 +167,18 @@ nav button:hover{
   font-weight: 300;
   border-radius: 5px;
   border: none;
-  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
   margin: 5px;
   width: 30vmax;
+  background-color: whitesmoke;
+  color: black;
+  box-shadow: 0px 0px 3px 0px rgb(110, 109, 109),
+    inset 0px 0px 1px 0px rgb(214, 214, 214);
+  transition: ease-out 0.3s;
+}
+.title:hover {
+  background-color: antiquewhite;
+  color: black;
+  cursor: pointer;
 }
 .SingleTodo button {
   border: 0.1px solid;
@@ -168,9 +196,9 @@ nav button:hover{
   align-items: center;
   font-size: 2.5vmax;
   cursor: pointer;
-  color: rgb(159, 15, 15);
-  transition: ease-out .3s;
+  color: rgb(190, 15, 15);
+  transition: ease-out 0.3s;
 }
-.DeleteTodo:hover{
+.DeleteTodo:hover {
   transform: scale(1.3);
 }

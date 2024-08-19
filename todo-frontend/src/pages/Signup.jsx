@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowAlert from "../components/ShowAlert";
 
@@ -28,7 +28,11 @@ export default function Signup() {
         }
       });
   }
-
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className="signin">
       <input
